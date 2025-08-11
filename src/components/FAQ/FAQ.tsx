@@ -10,19 +10,19 @@ const FAQ: React.FC = () => {
 
   const faqItems: FAQItem[] = [
     {
-      question: "How quickly can we implement AutomateAI in our existing workflow?",
+              question: "How quickly can we implement intraQ in our existing workflow?",
       answer: "Most clients see their first automated processes running within 24-48 hours. Our team provides dedicated onboarding support, and our platform integrates with 200+ existing tools through our universal API connectors. The average full deployment takes 1-2 weeks, depending on complexity."
     },
     {
       question: "What's the learning curve for our team to start using the platform?",
-      answer: "AutomateAI is designed for non-technical users. Most team members are productive within their first day. We provide comprehensive training materials, video tutorials, and dedicated support during your first month. Our drag-and-drop interface requires no coding knowledge."
+      answer: "intraQ is designed for non-technical users. Most team members are productive within their first day. We provide comprehensive training materials, video tutorials, and dedicated support during your first month. Our drag-and-drop interface requires no coding knowledge."
     },
     {
-      question: "How secure is our data with AutomateAI?",
+      question: "How secure is our data with intraQ?",
       answer: "Security is our top priority. We're SOC 2 Type II compliant, use end-to-end encryption, and maintain 99.9% uptime. Your data is processed in secure, isolated environments and we never access your confidential information. We also support on-premise deployments for enterprise clients."
     },
     {
-      question: "Can AutomateAI integrate with our current software stack?",
+      question: "Can intraQ integrate with our current software stack?",
       answer: "Yes, we support integrations with over 200 popular business applications including CRMs, ERPs, marketing tools, and custom APIs. Our universal connectors work with Salesforce, HubSpot, Microsoft 365, Google Workspace, Slack, and many more. Custom integrations are also available."
     },
     {
@@ -38,7 +38,7 @@ const FAQ: React.FC = () => {
       answer: "Our platform provides detailed analytics showing time saved, cost reduction, error elimination, and productivity gains. Most clients see 3-5x ROI within the first quarter. We also provide monthly reports and work with you to identify new automation opportunities for continued optimization."
     },
     {
-      question: "What if AutomateAI doesn't work for our specific use case?",
+      question: "What if intraQ doesn't work for our specific use case?",
       answer: "We offer a 14-day free trial with full access to all features, so you can test everything risk-free. If you're not satisfied within the first 30 days, we provide a full refund. Our success team also works with you during the trial to ensure optimal configuration for your specific needs."
     }
   ];

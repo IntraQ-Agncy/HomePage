@@ -11,7 +11,7 @@ const Reviews: React.FC = () => {
     {
       company: "TechFlow Solutions",
       logo: "TF",
-      review: "AutomateAI completely transformed our workflow efficiency. We've automated 90% of our repetitive tasks and our team productivity has skyrocketed. The implementation was seamless and the support team is exceptional.",
+      review: "intraQ completely transformed our workflow efficiency. We've automated 90% of our repetitive tasks and our team productivity has skyrocketed. The implementation was seamless and the support team is exceptional.",
       author: "David Chen",
       role: "CTO",
       rating: 5,
@@ -23,7 +23,7 @@ const Reviews: React.FC = () => {
     {
       company: "DataSync Corp",
       logo: "DS",
-      review: "The ROI we've seen from AutomateAI is incredible. Within 3 months, we reduced operational costs by 60% and improved our data processing speed by 300%. It's been a game-changer for our business.",
+      review: "The ROI we've seen from intraQ is incredible. Within 3 months, we reduced operational costs by 60% and improved our data processing speed by 300%. It's been a game-changer for our business.",
       author: "Sarah Martinez",
       role: "Operations Director",
       rating: 5,
@@ -35,7 +35,7 @@ const Reviews: React.FC = () => {
     {
       company: "SmartOps Inc",
       logo: "SO",
-      review: "We were skeptical about AI automation, but AutomateAI proved us wrong. The platform is intuitive, powerful, and has helped us scale our operations without hiring additional staff. Highly recommended!",
+      review: "We were skeptical about AI automation, but intraQ proved us wrong. The platform is intuitive, powerful, and has helped us scale our operations without hiring additional staff. Highly recommended!",
       author: "Michael Johnson",
       role: "CEO",
       rating: 5,
@@ -47,7 +47,7 @@ const Reviews: React.FC = () => {
     {
       company: "InnovateTech",
       logo: "IT",
-      review: "AutomateAI's integration capabilities are outstanding. We connected all our systems in just 2 days and started seeing results immediately. The analytics dashboard gives us insights we never had before.",
+      review: "intraQ's integration capabilities are outstanding. We connected all our systems in just 2 days and started seeing results immediately. The analytics dashboard gives us insights we never had before.",
       author: "Lisa Wang",
       role: "Head of Technology",
       rating: 5,
@@ -71,7 +71,7 @@ const Reviews: React.FC = () => {
     {
       company: "ScaleUp Ventures",
       logo: "SV",
-      review: "As a growing startup, AutomateAI has been crucial for our scaling efforts. We can handle 10x more customers with the same team size. The automation workflows are incredibly flexible and powerful.",
+      review: "As a growing startup, intraQ has been crucial for our scaling efforts. We can handle 10x more customers with the same team size. The automation workflows are incredibly flexible and powerful.",
       author: "Amanda Foster",
       role: "Founder",
       rating: 5,

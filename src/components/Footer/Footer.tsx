@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
           <div>
             <div className="flex items-center space-x-2 mb-6">
               <Bot className="h-8 w-8 text-blue-400" />
-              <span className="text-2xl font-bold">AutomateAI</span>
+                              <span className="text-2xl font-bold">intraQ</span>
             </div>
             <p className="text-gray-300 mb-8 text-lg leading-relaxed">
               Transform your business with intelligent AI automation. Join 500+ companies
@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
             <div className="space-y-4 mb-8">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-300">hello@automateai.com</span>
+                <span className="text-gray-300">hello@intraq.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-blue-400" />
@@ -226,7 +226,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
           <div className="text-gray-400 text-sm">
-            © 2025 AutomateAI. All rights reserved.
+            © 2025 intraQ. All rights reserved.
           </div>
           <div className="flex items-center space-x-6 text-sm text-gray-400">
             <span>SOC 2 Compliant</span>

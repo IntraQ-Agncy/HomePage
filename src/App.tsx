@@ -6,7 +6,7 @@ import Features from './components/Features/Features';
 import Benefits from './components/Benefits/Benefits';
 import Reviews from './components/Reviews/Reviews';
 import Pricing from './components/Pricing/Pricing';
-import Testimonials from './components/Testimonials/Testimonials';
+
 import FAQ from './components/FAQ/FAQ';
 import FinalCTA from './components/CTA/FinalCTA';
 import Footer from './components/Footer/Footer';
@@ -24,7 +24,7 @@ function App() {
           <Benefits />
           <Reviews />
           <Pricing />
-          <Testimonials />
+
           <FAQ />
           <FinalCTA />
         </main>
