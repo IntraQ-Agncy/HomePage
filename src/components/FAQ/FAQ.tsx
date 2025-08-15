@@ -2,11 +2,13 @@ import React, { useState, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { FAQItem } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const faqRef = useRef<HTMLDivElement>(null);
   const isVisible = useIntersectionObserver(faqRef, { threshold: 0.2 });
+  const navigate = useNavigate();
 
   const faqItems: FAQItem[] = [
     {
@@ -113,11 +115,8 @@ const FAQ: React.FC = () => {
             Our team is here to help. Get in touch and we'll respond within 24 hours.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
-              Contact Support
-            </button>
-            <button className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
-              Book a Demo
+            <button onClick={() => navigate('/signup?plan=Demo')} className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 px-8 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105">
+              Get a Demo
             </button>
           </div>
         </div>

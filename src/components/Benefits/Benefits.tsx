@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { CheckCircle, TrendingUp, Users, Shield } from 'lucide-react';
+import { CheckCircle, TrendingUp, Users, Shield, MapPin, Phone, Mail, Globe, Star, Download } from 'lucide-react';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { Benefit } from '../../types';
 
@@ -44,78 +44,62 @@ const Benefits: React.FC = () => {
     <section id="about" ref={benefitsRef} className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Image/Visual Side */}
+          {/* Visual Side - Product-themed illustration */}
           <div
             className={`mb-16 lg:mb-0 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
             }`}
           >
             <div className="relative">
-              {/* Main visual container */}
+              {/* Product-aligned card */}
               <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-purple-700 rounded-3xl p-8 shadow-2xl">
                 <div className="bg-white dark:bg-gray-900 rounded-2xl p-6">
-                  <div className="space-y-6">
-                    {/* Header */}
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                        Automation Dashboard
-                      </h3>
-                      <div className="flex space-x-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      </div>
+                  {/* Title row */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-2">
+                      <MapPin className="h-5 w-5 text-blue-600" />
+                      <span className="text-sm font-bold text-gray-900 dark:text-white">What You Get</span>
                     </div>
-
-                    {/* Progress bars */}
-                    <div className="space-y-4">
-                      <div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
-                          <span>Task Automation</span>
-                          <span>85%</span>
-                        </div>
-                        <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                          <div className="bg-blue-600 h-2 rounded-full w-4/5"></div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
-                          <span>Cost Reduction</span>
-                          <span>92%</span>
-                        </div>
-                        <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                          <div className="bg-green-500 h-2 rounded-full w-11/12"></div>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
-                          <span>Team Efficiency</span>
-                          <span>78%</span>
-                        </div>
-                        <div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                          <div className="bg-yellow-500 h-2 rounded-full w-3/4"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Stats grid */}
-                    <div className="grid grid-cols-2 gap-4 pt-4">
-                      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3 text-center">
-                        <TrendingUp className="h-6 w-6 text-blue-600 mx-auto mb-1" />
-                        <div className="text-lg font-bold text-blue-600">↑ 185%</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">ROI Increase</div>
-                      </div>
-                      <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-3 text-center">
-                        <Users className="h-6 w-6 text-green-600 mx-auto mb-1" />
-                        <div className="text-lg font-bold text-green-600">500+</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">Happy Clients</div>
-                      </div>
+                    <div className="flex items-center space-x-2 text-xs text-blue-600 dark:text-blue-400">
+                      <Download className="h-4 w-4" />
+                      <span>CSV / Excel</span>
                     </div>
                   </div>
+
+                  {/* Icon grid representing data fields */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+                      <Phone className="h-6 w-6 mx-auto text-blue-600" />
+                      <div className="mt-2 text-xs text-gray-700 dark:text-gray-300">Phone</div>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+                      <Mail className="h-6 w-6 mx-auto text-blue-600" />
+                      <div className="mt-2 text-xs text-gray-700 dark:text-gray-300">Email*</div>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+                      <Globe className="h-6 w-6 mx-auto text-blue-600" />
+                      <div className="mt-2 text-xs text-gray-700 dark:text-gray-300">Website</div>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+                      <MapPin className="h-6 w-6 mx-auto text-blue-600" />
+                      <div className="mt-2 text-xs text-gray-700 dark:text-gray-300">Address</div>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+                      <Star className="h-6 w-6 mx-auto text-yellow-500" />
+                      <div className="mt-2 text-xs text-gray-700 dark:text-gray-300">Rating</div>
+                    </div>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-700 p-4 text-center">
+                      <Users className="h-6 w-6 mx-auto text-blue-600" />
+                      <div className="mt-2 text-xs text-gray-700 dark:text-gray-300">Category</div>
+                    </div>
+                  </div>
+
+                  {/* Footnote */}
+                  <div className="mt-4 text-[11px] text-gray-500 dark:text-gray-400">* Email included when publicly available</div>
                 </div>
               </div>
 
-              {/* Floating elements */}
+              {/* Floating element */}
               <div className="absolute -top-6 -right-6 bg-yellow-400 rounded-full p-4 shadow-lg animate-pulse">
                 <Shield className="h-6 w-6 text-gray-900" />
               </div>
