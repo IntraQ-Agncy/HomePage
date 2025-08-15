@@ -29,7 +29,7 @@ const Pricing: React.FC = () => {
       period: '',
       description: 'Best value for growing teams ramping up outreach',
       features: [
-        '500 verified leads',
+        '250 verified leads',
         'Google Maps source',
         'CSV/Excel delivery in 24 hours',
         'India + Global targeting'
@@ -43,7 +43,7 @@ const Pricing: React.FC = () => {
       period: '',
       description: 'High-volume lead generation at scale',
       features: [
-        '2000 verified leads',
+        '500 verified leads',
         'Google Maps source',
         'CSV/Excel delivery in 24 hours',
         'Priority support'
