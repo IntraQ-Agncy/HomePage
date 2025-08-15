@@ -1,10 +1,12 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Check, Star, ArrowRight } from 'lucide-react';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { PricingTier } from '../../types';
 
 const Pricing: React.FC = () => {
   const pricingRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const isVisible = useIntersectionObserver(pricingRef, { threshold: 0.2 });
 
   const pricingTiers: PricingTier[] = [
@@ -61,11 +63,8 @@ const Pricing: React.FC = () => {
     }
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleSelectPlan = (planName: string) => {
+    navigate(`/signup?plan=${encodeURIComponent(planName)}`);
   };
 
   return (
@@ -157,14 +156,14 @@ const Pricing: React.FC = () => {
               </ul>
 
               <button
-                onClick={() => scrollToSection('#contact')}
+                onClick={() => handleSelectPlan(tier.name)}
                 className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 group ${
                   tier.isPopular
                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
                     : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
                 }`}
               >
-                <span>{tier.buttonText}</span>
+                <span>{tier.isPopular ? 'Choose Professional' : tier.name === 'Starter' ? 'Choose Starter' : 'Choose Enterprise'}</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
