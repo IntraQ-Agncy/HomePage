@@ -16,7 +16,6 @@ export interface PricingTier {
   description: string;
   features: string[];
   isPopular?: boolean;
-  buttonText: string;
 }
 
 export interface Testimonial {

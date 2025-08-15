@@ -1,21 +1,13 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PAYMENT_LINKS, PLAN_PRICES, isValidPlan, isDemoPlan } from '../../config/payments';
+import { PAYMENT_LINKS, isValidPlan } from '../../config/payments';
 import { GOOGLE_APPS_SCRIPT_URL } from '../../config/sheets';
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search);
-};
-
 const SignupForm: React.FC = () => {
-  const query = useQuery();
+  const query = new URLSearchParams(useLocation().search);
   const navigate = useNavigate();
 
-  const selectedPlan = useMemo(() => {
-    const planParam = query.get('plan');
-    if (isDemoPlan(planParam)) return 'Demo';
-    return isValidPlan(planParam) ? planParam : 'Starter';
-  }, [query]);
+  const selectedPlan = query.get('plan') && isValidPlan(query.get('plan')) ? query.get('plan')! : 'Starter';
 
   const [email, setEmail] = useState('');
   const [niche, setNiche] = useState('');
@@ -41,15 +33,13 @@ const SignupForm: React.FC = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const isDemo = selectedPlan === 'Demo';
-    const paymentUrl = isDemo ? undefined : PAYMENT_LINKS[selectedPlan as keyof typeof PAYMENT_LINKS];
-    const totalPrice = isDemo ? ('DEMO' as const) : (PLAN_PRICES[selectedPlan as keyof typeof PLAN_PRICES] ?? 0);
+    
     const orderId = `ORD-${Date.now()}`;
 
     // Persist locally
     sessionStorage.setItem(
       'signupLead',
-      JSON.stringify({ email, niche, location, phone, country, plan: selectedPlan, orderId, totalPrice })
+      JSON.stringify({ email, niche, location, phone, country, plan: selectedPlan, orderId })
     );
 
     // Send to Google Sheets via Apps Script if configured
@@ -66,32 +56,24 @@ const SignupForm: React.FC = () => {
           status: 'initiated',
           apify_run_id: '',
           csv_url: '',
-          total_price: totalPrice,
+          total_price: selectedPlan === 'Starter' ? 899 : selectedPlan === 'Pro' ? 1999 : 3499,
           plan: selectedPlan,
           country,
           phone
-        } as const;
+        };
 
-        // Prefer navigator.sendBeacon for reliability during navigation
-        let sent = false;
-        if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
-          try {
-            const blob = new Blob([JSON.stringify(payload)], { type: 'text/plain;charset=utf-8' });
-            sent = navigator.sendBeacon(GOOGLE_APPS_SCRIPT_URL, blob);
-          } catch {}
-        }
-        if (!sent) {
-          // Fallback to fetch keepalive without triggering preflight
-          const controller = new AbortController();
-          const timeoutId = window.setTimeout(() => controller.abort(), 3000);
+        // Use sendBeacon for reliability during navigation
+        if (navigator.sendBeacon) {
+          const blob = new Blob([JSON.stringify(payload)], { type: 'text/plain;charset=utf-8' });
+          navigator.sendBeacon(GOOGLE_APPS_SCRIPT_URL, blob);
+        } else {
+          // Fallback to fetch
           await fetch(GOOGLE_APPS_SCRIPT_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(payload),
-            keepalive: true,
-            signal: controller.signal
-          }).catch(() => {/* ignore network errors and proceed */});
-          window.clearTimeout(timeoutId);
+            keepalive: true
+          }).catch(() => {/* ignore network errors */});
         }
       } catch (err) {
         console.error('Failed to log order to Google Sheets', err);
@@ -100,11 +82,10 @@ const SignupForm: React.FC = () => {
       }
     }
 
-    if (!isDemo && paymentUrl) {
-      window.location.href = paymentUrl;
-    } else {
-      // For demo, route back to home or show a success state
-      navigate('/');
+    // Immediately redirect to payment
+    const paymentUrl = PAYMENT_LINKS[selectedPlan as keyof typeof PAYMENT_LINKS];
+    if (paymentUrl) {
+      window.open(paymentUrl, '_blank');
     }
   };
 
@@ -234,10 +215,12 @@ const SignupForm: React.FC = () => {
                 disabled={submitting}
                 className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:scale-[1.01] bg-blue-600 hover:bg-blue-700 text-white ${submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
               >
-                {submitting ? 'Processing…' : 'Continue to Payment'}
+                {submitting ? 'Processing…' : 'Submit'}
               </button>
             </div>
           </form>
+
+
         </div>
       </div>
     </section>

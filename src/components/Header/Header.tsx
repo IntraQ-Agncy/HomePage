@@ -2,23 +2,32 @@ import React, { useState } from 'react';
 import { Menu, X, Sun, Moon, Bot } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useScrollShadow } from '../../hooks/useScrollShadow';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const hasScrollShadow = useScrollShadow();
+  const navigate = useNavigate();
 
   const navItems = [
     { label: 'Features', href: '#features' },
     { label: 'Pricing', href: '#pricing' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Resume Advisor', href: '/resume-advisor' },
   ];
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/')) {
+      // Route navigation
+      navigate(href);
+    } else {
+      // Anchor link scrolling
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setIsMobileMenuOpen(false);
   };

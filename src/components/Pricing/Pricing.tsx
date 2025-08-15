@@ -1,12 +1,26 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Check, Star, ArrowRight } from 'lucide-react';
+import { Check, Star } from 'lucide-react';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { PricingTier } from '../../types';
 
+// Component to render payment buttons that redirect to the signup form
+const PaymentButton: React.FC<{ planName: string }> = ({ planName }) => {
+  const handleButtonClick = () => {
+    window.location.href = `/signup?plan=${encodeURIComponent(planName)}`;
+  };
+
+  return (
+    <button
+      onClick={handleButtonClick}
+      className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:scale-105"
+    >
+      Get {planName} - ₹{planName === 'Starter' ? '899' : planName === 'Pro' ? '1,999' : '3,499'}
+    </button>
+  );
+};
+
 const Pricing: React.FC = () => {
   const pricingRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
   const isVisible = useIntersectionObserver(pricingRef, { threshold: 0.2 });
 
   const pricingTiers: PricingTier[] = [
@@ -20,8 +34,7 @@ const Pricing: React.FC = () => {
         'Google Maps source',
         'CSV/Excel delivery in 24 hours',
         'India-first targeting'
-      ],
-      buttonText: 'Get Starter'
+      ]
     },
     {
       name: 'Pro',
@@ -34,8 +47,7 @@ const Pricing: React.FC = () => {
         'CSV/Excel delivery in 24 hours',
         'India + Global targeting'
       ],
-      isPopular: true,
-      buttonText: 'Get Pro'
+      isPopular: true
     },
     {
       name: 'Enterprise',
@@ -47,14 +59,11 @@ const Pricing: React.FC = () => {
         'Google Maps source',
         'CSV/Excel delivery in 24 hours',
         'Priority support'
-      ],
-      buttonText: 'Get Enterprise'
+      ]
     }
   ];
 
-  const handleSelectPlan = (planName: string) => {
-    navigate(`/signup?plan=${encodeURIComponent(planName)}`);
-  };
+  // Remove the handleSelectPlan function as we're using Razorpay buttons now
 
   return (
     <section id="pricing" ref={pricingRef} className="py-20 bg-white dark:bg-gray-900">
@@ -139,17 +148,7 @@ const Pricing: React.FC = () => {
                 ))}
               </ul>
 
-              <button
-                onClick={() => handleSelectPlan(tier.name)}
-                className={`w-full py-3 px-6 rounded-lg font-semibold transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 group ${
-                  tier.isPopular
-                    ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                    : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
-                }`}
-              >
-                <span>{tier.buttonText}</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </button>
+                              <PaymentButton planName={tier.name} />
             </div>
           ))}
         </div>
