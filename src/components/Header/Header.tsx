@@ -35,7 +35,7 @@ const Header: React.FC = () => {
           <div className="flex items-center space-x-2">
             <Bot className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              intraQ
+              IntraQ
             </span>
           </div>
 
@@ -62,10 +62,10 @@ const Header: React.FC = () => {
               {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </button>
             <button
-              onClick={() => scrollToSection('#contact')}
+              onClick={() => scrollToSection('#pricing')}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300 hover:scale-105"
             >
-              Get Started
+              Get Leads Now
             </button>
           </div>
 
@@ -108,10 +108,10 @@ const Header: React.FC = () => {
             </button>
           ))}
           <button
-            onClick={() => scrollToSection('#contact')}
+            onClick={() => scrollToSection('#pricing')}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-300"
           >
-            Get Started
+            Get Leads Now
           </button>
         </div>
       </div>

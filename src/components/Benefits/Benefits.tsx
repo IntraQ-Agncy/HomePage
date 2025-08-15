@@ -6,6 +6,12 @@ import { Benefit } from '../../types';
 const Benefits: React.FC = () => {
   const benefitsRef = useRef<HTMLDivElement>(null);
   const isVisible = useIntersectionObserver(benefitsRef, { threshold: 0.2 });
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const benefits: Benefit[] = [
     {
@@ -123,15 +129,19 @@ const Benefits: React.FC = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Why Leading Companies Choose Our AI Automation Platform
+              What You Get with IntraQ
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-              Transform your business operations with intelligent automation that adapts to your
-              unique needs and scales with your growth ambitions.
+              AI-powered, instant, verified leads from Google Maps. Built for sales teams who want results fast.
             </p>
 
             <div className="space-y-6">
-              {benefits.map((benefit, index) => (
+              {[
+                { title: 'Data Fields', description: 'Business name, category, address, phone number, email (if available), website, Google rating.' },
+                { title: 'Target Markets', description: 'India first, with ability to deliver global leads.' },
+                { title: 'Output Format', description: 'Delivered in CSV or Excel within 24 hours of order.' },
+                { title: 'Use Cases', description: 'Great for restaurants, dentists, marketing agencies, real estate agents, salons, gyms, and more.' }
+              ].map((benefit, index) => (
                 <div key={index} className="flex items-start space-x-4 group">
                   <div className="flex-shrink-0 mt-1">
                     <CheckCircle className="h-6 w-6 text-green-500 group-hover:scale-110 transition-transform duration-300" />
@@ -149,8 +159,8 @@ const Benefits: React.FC = () => {
             </div>
 
             <div className="mt-10">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105">
-                Learn More About Our Solutions
+              <button onClick={() => scrollToSection('#pricing')} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105">
+                Explore Packages
               </button>
             </div>
           </div>

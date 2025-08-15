@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PAYMENT_LINKS, PLAN_PRICES, isValidPlan } from '../../config/payments';
+import { PAYMENT_LINKS, PLAN_PRICES, isValidPlan, isDemoPlan } from '../../config/payments';
 import { GOOGLE_APPS_SCRIPT_URL } from '../../config/sheets';
 
 const useQuery = () => {
@@ -13,12 +13,14 @@ const SignupForm: React.FC = () => {
 
   const selectedPlan = useMemo(() => {
     const planParam = query.get('plan');
+    if (isDemoPlan(planParam)) return 'Demo';
     return isValidPlan(planParam) ? planParam : 'Starter';
   }, [query]);
 
   const [email, setEmail] = useState('');
   const [niche, setNiche] = useState('');
   const [location, setLocation] = useState('');
+  const [phone, setPhone] = useState('');
   const [country, setCountry] = useState<'India' | 'International' | ''>('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -30,6 +32,7 @@ const SignupForm: React.FC = () => {
     }
     if (!niche) newErrors.niche = 'Please enter your niche';
     if (!location) newErrors.location = 'Please enter your location';
+    if (!phone || !/^\+?[0-9\-()\s]{7,15}$/.test(phone)) newErrors.phone = 'Please enter a valid phone number';
     if (!country) newErrors.country = 'Please select a country option';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -38,14 +41,15 @@ const SignupForm: React.FC = () => {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const paymentUrl = PAYMENT_LINKS[selectedPlan];
-    const totalPrice = PLAN_PRICES[selectedPlan] ?? 0;
+    const isDemo = selectedPlan === 'Demo';
+    const paymentUrl = isDemo ? undefined : PAYMENT_LINKS[selectedPlan as keyof typeof PAYMENT_LINKS];
+    const totalPrice = isDemo ? ('DEMO' as const) : (PLAN_PRICES[selectedPlan as keyof typeof PLAN_PRICES] ?? 0);
     const orderId = `ORD-${Date.now()}`;
 
     // Persist locally
     sessionStorage.setItem(
       'signupLead',
-      JSON.stringify({ email, niche, location, country, plan: selectedPlan, orderId, totalPrice })
+      JSON.stringify({ email, niche, location, phone, country, plan: selectedPlan, orderId, totalPrice })
     );
 
     // Send to Google Sheets via Apps Script if configured
@@ -64,7 +68,8 @@ const SignupForm: React.FC = () => {
           csv_url: '',
           total_price: totalPrice,
           plan: selectedPlan,
-          country
+          country,
+          phone
         } as const;
 
         // Prefer navigator.sendBeacon for reliability during navigation
@@ -95,7 +100,12 @@ const SignupForm: React.FC = () => {
       }
     }
 
-    window.location.href = paymentUrl;
+    if (!isDemo && paymentUrl) {
+      window.location.href = paymentUrl;
+    } else {
+      // For demo, route back to home or show a success state
+      navigate('/');
+    }
   };
 
   return (
@@ -166,6 +176,22 @@ const SignupForm: React.FC = () => {
               />
               {errors.location && (
                 <p className="mt-2 text-sm text-red-600">{errors.location}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="e.g., +91 98765 43210"
+              />
+              {errors.phone && (
+                <p className="mt-2 text-sm text-red-600">{errors.phone}</p>
               )}
             </div>
 

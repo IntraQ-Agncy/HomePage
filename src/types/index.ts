@@ -44,6 +44,7 @@ export interface Review {
   author: string;
   role: string;
   rating: number;
+  plan?: 'Starter' | 'Pro' | 'Enterprise';
   metrics?: {
     label: string;
     value: string;

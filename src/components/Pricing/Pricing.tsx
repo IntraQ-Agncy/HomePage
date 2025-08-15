@@ -12,54 +12,43 @@ const Pricing: React.FC = () => {
   const pricingTiers: PricingTier[] = [
     {
       name: 'Starter',
-      price: '$49',
-      period: '/month',
-      description: 'Perfect for small teams getting started with automation',
+      price: '₹899',
+      period: '',
+      description: 'Perfect to test the waters with focused outreach',
       features: [
-        'Up to 100 automated tasks/month',
-        'Basic integrations (10+)',
-        'Email support',
-        'Standard dashboard',
-        'Basic analytics',
-        '2 team members'
+        '100 verified leads',
+        'Google Maps source',
+        'CSV/Excel delivery in 24 hours',
+        'India-first targeting'
       ],
-      buttonText: 'Start Free Trial'
+      buttonText: 'Get Starter'
     },
     {
-      name: 'Professional',
-      price: '$149',
-      period: '/month',
-      description: 'Ideal for growing businesses that need advanced features',
+      name: 'Pro',
+      price: '₹1,999',
+      period: '',
+      description: 'Best value for growing teams ramping up outreach',
       features: [
-        'Up to 1,000 automated tasks/month',
-        'Advanced integrations (50+)',
-        'Priority support',
-        'Advanced dashboard with custom views',
-        'Detailed analytics & reporting',
-        '10 team members',
-        'Custom workflows',
-        'API access'
+        '500 verified leads',
+        'Google Maps source',
+        'CSV/Excel delivery in 24 hours',
+        'India + Global targeting'
       ],
       isPopular: true,
-      buttonText: 'Start Free Trial'
+      buttonText: 'Get Pro'
     },
     {
       name: 'Enterprise',
-      price: 'Custom',
+      price: '₹3,499',
       period: '',
-      description: 'For large organizations with complex automation needs',
+      description: 'High-volume lead generation at scale',
       features: [
-        'Unlimited automated tasks',
-        'All integrations (200+)',
-        'Dedicated success manager',
-        'Custom dashboard & branding',
-        'Advanced analytics & insights',
-        'Unlimited team members',
-        'Custom integrations',
-        'SLA guarantee',
-        'On-premise deployment option'
+        '2000 verified leads',
+        'Google Maps source',
+        'CSV/Excel delivery in 24 hours',
+        'Priority support'
       ],
-      buttonText: 'Contact Sales'
+      buttonText: 'Get Enterprise'
     }
   ];
 
@@ -76,7 +65,7 @@ const Pricing: React.FC = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Choose Your Perfect Plan
+            Choose Your Package
           </h2>
           <p
             className={`text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-8 transition-all duration-1000 delay-200 ${
@@ -87,18 +76,13 @@ const Pricing: React.FC = () => {
             transparent pricing that grows with your success.
           </p>
 
-          {/* Pricing Toggle */}
+          {/* Intro blurb */}
           <div
-            className={`inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg p-1 transition-all duration-1000 delay-400 ${
+            className={`text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-all duration-1000 delay-400 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            <span className="bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm">
-              Monthly
-            </span>
-            <span className="text-gray-500 dark:text-gray-400 px-4 py-2 text-sm font-medium">
-              Yearly (Save 20%)
-            </span>
+            Delivered in 24 hours • CSV/Excel • Google Maps source • India + International
           </div>
         </div>
 
@@ -163,7 +147,7 @@ const Pricing: React.FC = () => {
                     : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white'
                 }`}
               >
-                <span>{tier.isPopular ? 'Choose Professional' : tier.name === 'Starter' ? 'Choose Starter' : 'Choose Enterprise'}</span>
+                <span>{tier.buttonText}</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
             </div>
@@ -177,7 +161,7 @@ const Pricing: React.FC = () => {
           }`}
         >
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            All plans include 14-day free trial • No setup fees • Cancel anytime
+            Data fields: name, category, address, phone, email (if available), website, rating
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8">
             <div className="flex items-center space-x-2">

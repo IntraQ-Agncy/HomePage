@@ -1,20 +1,8 @@
-import React, { useState } from 'react';
-import { Bot, Mail, Phone, MapPin, ArrowRight, Twitter, Linkedin, Github } from 'lucide-react';
+import React from 'react';
+import { Bot, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [isSubscribed, setIsSubscribed] = useState(false);
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setIsSubscribed(true);
-      setTimeout(() => {
-        setIsSubscribed(false);
-        setEmail('');
-      }, 3000);
-    }
-  };
+  // Newsletter removed
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -66,7 +54,7 @@ const Footer: React.FC = () => {
                               <span className="text-2xl font-bold">intraQ</span>
             </div>
             <p className="text-gray-300 mb-8 text-lg leading-relaxed">
-              Transform your business with intelligent AI automation. Join 500+ companies
+              Transform your business with intelligent AI automation. Join multiple companies
               already saving time, reducing costs, and accelerating growth with our platform.
             </p>
 
@@ -74,86 +62,23 @@ const Footer: React.FC = () => {
             <div className="space-y-4 mb-8">
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-300">hello@intraq.com</span>
+                <span className="text-gray-300">intraqagncy@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-300">+1 (555) 123-4567</span>
+                <span className="text-gray-300">Coming Soon</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-blue-400" />
-                <span className="text-gray-300">San Francisco, CA</span>
+                <span className="text-gray-300">Delhi, India</span>
               </div>
             </div>
 
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              <a
-                href="#"
-                className="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all duration-300 hover:scale-110"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all duration-300 hover:scale-110"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a
-                href="#"
-                className="bg-gray-800 hover:bg-gray-700 p-3 rounded-lg transition-all duration-300 hover:scale-110"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5" />
-              </a>
-            </div>
+            
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h3 className="text-2xl font-bold mb-4">Stay Updated</h3>
-            <p className="text-gray-300 mb-6">
-              Get the latest updates on AI automation trends, product updates, and exclusive insights
-              delivered to your inbox monthly.
-            </p>
-
-            <form onSubmit={handleNewsletterSubmit} className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email address"
-                  className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-gray-400"
-                  required
-                />
-                <button
-                  type="submit"
-                  disabled={isSubscribed}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2 group ${
-                    isSubscribed
-                      ? 'bg-green-600 text-white cursor-not-allowed'
-                      : 'bg-blue-600 hover:bg-blue-700 text-white hover:scale-105'
-                  }`}
-                >
-                  {isSubscribed ? (
-                    <span>Subscribed!</span>
-                  ) : (
-                    <>
-                      <span>Subscribe</span>
-                      <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </>
-                  )}
-                </button>
-              </div>
-              <p className="text-sm text-gray-400">
-                By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
-              </p>
-            </form>
-          </div>
+          {/* Right Column intentionally left minimal */}
+          <div></div>
         </div>
 
         {/* Footer Links */}

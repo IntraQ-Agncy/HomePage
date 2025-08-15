@@ -10,23 +10,23 @@ const Features: React.FC = () => {
   const features: Feature[] = [
     {
       icon: 'zap',
-      title: 'Process Automation',
-      description: 'Automate repetitive tasks and workflows with our intelligent AI system. Reduce manual work by 85% and eliminate human errors completely.'
-    },
-    {
-      icon: 'chart',
-      title: 'Data Analytics',
-      description: 'Get actionable insights from your data with real-time analytics and AI-powered predictions. Make data-driven decisions with confidence.'
+      title: 'Google Maps Scraping',
+      description: 'We extract business details directly from Google Maps using AI + automation for speed and scale.'
     },
     {
       icon: 'share',
-      title: 'Smart Integrations',
-      description: 'Connect all your existing tools seamlessly with our universal API integrations. Works with 200+ popular business applications.'
+      title: 'Verified Contacts',
+      description: 'Business name, category, address, phone, email (if available), website, and Google rating.'
     },
     {
       icon: 'clock',
-      title: '24/7 Monitoring',
-      description: 'Round-the-clock system monitoring with proactive alerts and automatic issue resolution. 99.9% uptime guaranteed with instant notifications.'
+      title: '24-Hour Delivery',
+      description: 'Get clean, ready-to-use leads delivered in CSV or Excel within 24 hours of your order.'
+    },
+    {
+      icon: 'chart',
+      title: 'India + Global',
+      description: 'India-first targeting with the ability to deliver leads in international markets on demand.'
     }
   ];
 
@@ -54,15 +54,15 @@ const Features: React.FC = () => {
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Powerful AI Features That Drive Results
+            Google Maps Lead Generation
           </h2>
           <p
             className={`text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-all duration-1000 delay-200 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
             }`}
           >
-            Our comprehensive suite of AI automation tools helps businesses streamline operations,
-            reduce costs, and accelerate growth with cutting-edge technology.
+            IntraQ delivers instant, verified business leads so your sales team can focus on outreach,
+            not research.
           </p>
         </div>
 
@@ -88,29 +88,11 @@ const Features: React.FC = () => {
           ))}
         </div>
 
-        {/* Stats Section */}
-        <div className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { number: '500+', label: 'Companies Trust Us' },
-            { number: '85%', label: 'Productivity Increase' },
-            { number: '24/7', label: 'Support Available' },
-            { number: '99.9%', label: 'Uptime Guarantee' }
-          ].map((stat, index) => (
-            <div
-              key={index}
-              className={`text-center transition-all duration-1000 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${600 + index * 150}ms` }}
-            >
-              <div className="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                {stat.number}
-              </div>
-              <div className="text-gray-600 dark:text-gray-400 font-medium">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+        {/* Niche examples */}
+        <div className="mt-16 text-center">
+          <div className="text-gray-600 dark:text-gray-400">
+            Niche examples: Restaurants, dentists, marketing agencies, real estate agents, salons, gyms, and more.
+          </div>
         </div>
       </div>
     </section>

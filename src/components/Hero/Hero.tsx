@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Play, CheckCircle } from 'lucide-react';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 
 const Hero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const isVisible = useIntersectionObserver(heroRef, { threshold: 0.3 });
 
   const scrollToSection = (href: string) => {
@@ -27,21 +29,20 @@ const Hero: React.FC = () => {
             }`}
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
-              Transform Your Business with{' '}
-              <span className="text-blue-600 dark:text-blue-400">AI Automation</span>
+              Instant, Verified Leads with{' '}
+              <span className="text-blue-600 dark:text-blue-400">AI + Automation</span>
             </h1>
             <p className="mt-6 text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              Streamline operations, boost productivity by 85%, and reduce costs with our
-              cutting-edge AI automation solutions. Join 500+ companies already transforming
-              their workflows.
+              IntraQ delivers ready-to-use business leads fast. Our flagship service, Google Maps Lead
+              Generation, finds and verifies contacts so you can focus on selling, not searching.
             </p>
             
             {/* Key Benefits */}
             <div className="mt-8 space-y-3">
               {[
-                'Deploy in 24 hours with zero downtime',
-                'Save 40+ hours per week on manual tasks',
-                '99.9% uptime with 24/7 monitoring'
+                'Verified contact data (name, phone, email if available, website)',
+                'Delivery within 24 hours in CSV or Excel',
+                'India-first targeting with global capability'
               ].map((benefit, index) => (
                 <div key={index} className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-500" />
@@ -53,18 +54,18 @@ const Hero: React.FC = () => {
             {/* CTA Buttons */}
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <button
-                onClick={() => scrollToSection('#contact')}
+                onClick={() => scrollToSection('#pricing')}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 group"
               >
-                <span>Start Free Trial</span>
+                <span>Get Leads Now</span>
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
               </button>
               <button
-                onClick={() => scrollToSection('#features')}
+                onClick={() => navigate('/signup?plan=Demo')}
                 className="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white hover:border-blue-600 dark:hover:border-blue-400 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 group"
               >
                 <Play className="h-5 w-5" />
-                <span>Watch Demo</span>
+                <span>Get a Demo</span>
               </button>
             </div>
 

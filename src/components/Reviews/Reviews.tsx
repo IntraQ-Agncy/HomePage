@@ -15,6 +15,7 @@ const Reviews: React.FC = () => {
       author: "David Chen",
       role: "CTO",
       rating: 5,
+      plan: 'Starter',
       metrics: {
         label: "Time Saved",
         value: "40hrs/week"
@@ -27,6 +28,7 @@ const Reviews: React.FC = () => {
       author: "Sarah Martinez",
       role: "Operations Director",
       rating: 5,
+      plan: 'Pro',
       metrics: {
         label: "Cost Reduction",
         value: "60%"
@@ -39,6 +41,7 @@ const Reviews: React.FC = () => {
       author: "Michael Johnson",
       role: "CEO",
       rating: 5,
+      plan: 'Enterprise',
       metrics: {
         label: "Efficiency Gain",
         value: "85%"
@@ -108,6 +111,9 @@ const Reviews: React.FC = () => {
     }
   };
 
+  const plansOrder: Array<'Starter' | 'Pro' | 'Enterprise'> = ['Starter', 'Pro', 'Enterprise'];
+  const reviewsByPlan = plansOrder.map(plan => reviews.filter(r => r.plan === plan));
+
   return (
     <section ref={reviewsRef} className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,7 +136,7 @@ const Reviews: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
+          {reviewsByPlan.flat().map((review, index) => (
             <div
               key={index}
               className={`bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gray-200 dark:border-gray-700 ${
@@ -148,6 +154,9 @@ const Reviews: React.FC = () => {
                     <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
                       {review.company}
                     </h3>
+                    {review.plan && (
+                      <div className="text-xs text-gray-500 dark:text-gray-400">{review.plan} Package</div>
+                    )}
                     <div className="flex items-center space-x-1">
                       {renderStars(review.rating)}
                     </div>

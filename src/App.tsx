@@ -8,7 +8,6 @@ import Reviews from './components/Reviews/Reviews';
 import Pricing from './components/Pricing/Pricing';
 
 import FAQ from './components/FAQ/FAQ';
-import FinalCTA from './components/CTA/FinalCTA';
 import Footer from './components/Footer/Footer';
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
           <Pricing />
 
           <FAQ />
-          <FinalCTA />
         </main>
         <Footer />
       </div>
