@@ -1,94 +1,91 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft, Upload, FileText, Mail, Target } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Upload, FileText, Mail, User, Phone, Briefcase } from 'lucide-react';
+import { PAYMENT_LINKS } from '../../config/payments';
+import { submitResume, validateFormData, type ResumeFormData } from '../../api/resumeAdvisor';
 
 const UploadForm: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    resume: null as File | null,
-    targetRole: '',
-    email: ''
+  const [formData, setFormData] = useState<ResumeFormData>({
+    fullName: '',
+    email: '',
+    phone: '',
+    desiredRole: ''
   });
-
-  useEffect(() => {
-    // Get email from URL if provided
-    const email = searchParams.get('email');
-    if (email) {
-      setFormData(prev => ({ ...prev, email }));
-    }
-    
-    // Simple check: if they don't have the paid parameter, show payment reminder
-    const paid = searchParams.get('paid');
-    if (paid !== '1') {
-      // Don't redirect, just show a friendly reminder
-      console.log('Payment verification required');
-    }
-  }, [searchParams]);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFormData(prev => ({ ...prev, resume: file }));
+      setResumeFile(file);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear errors when user starts typing
+    if (errors.length > 0) {
+      setErrors([]);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.resume) {
-      alert('Please select a resume file');
+    if (!resumeFile) {
+      setErrors(['Please select a resume file']);
       return;
     }
     
-    if (!formData.targetRole || !formData.email) {
-      alert('Please fill in all required fields');
+    // Validate form data
+    const validation = validateFormData(formData);
+    if (!validation.valid) {
+      setErrors(validation.errors);
       return;
     }
 
     setIsLoading(true);
+    setErrors([]);
     
     try {
-      // Import and use the actual resume analysis API
-      const { analyzeResume } = await import('../../api/resumeAdvisor');
+      console.log('🚀 Submitting resume with data:', formData);
       
-      const result = await analyzeResume({
-        resume: formData.resume,
-        targetRole: formData.targetRole,
-        email: formData.email
-      });
+      const result = await submitResume(resumeFile, formData);
       
       if (result.success) {
-        // Store analysis result in session storage for success page
-        sessionStorage.setItem('resumeAnalysis', JSON.stringify({
+        console.log('✅ Resume submitted successfully:', result);
+        
+        // Store submission data and redirect to payment
+        sessionStorage.setItem('resumeSubmission', JSON.stringify({
           email: formData.email,
-          targetRole: formData.targetRole,
-          analysisId: result.analysisId,
-          message: result.message
+          fullName: formData.fullName,
+          submissionId: result.submissionId,
+          originalFileUrl: result.originalFileUrl,
+          formDetailsFileUrl: result.formDetailsFileUrl
         }));
-        navigate('/resume-advisor/success');
+        
+        // Redirect to payment page
+        const paymentUrl = PAYMENT_LINKS.ResumeAdvisor;
+        window.location.href = paymentUrl;
       } else {
-        alert(`Analysis failed: ${result.message}`);
+        console.error('❌ Resume submission failed:', result.error);
+        setErrors([result.error || 'Submission failed. Please try again.']);
       }
     } catch (error) {
-      console.error('Resume analysis error:', error);
-      alert('Failed to analyze resume. Please try again.');
+      console.error('Resume submission error:', error);
+      setErrors(['Failed to submit resume. Please try again.']);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const paid = searchParams.get('paid') === '1';
-
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 pt-24">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
           <button
@@ -102,48 +99,28 @@ const UploadForm: React.FC = () => {
             Upload Your Resume
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mt-2">
-            Get AI-powered feedback to improve your resume
+            Submit your resume and professional details for expert analysis
           </p>
-          
-          {/* Payment Status */}
-          {paid ? (
-            <div className="mt-4 space-y-2">
-              <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                ✅ Payment Confirmed - Ready to Upload
-              </div>
-              {formData.email && (
-                <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                  📧 Verified Email: {formData.email}
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-              ⚠️ Payment Required - Please complete payment first
-            </div>
-          )}
         </div>
 
-        {/* Payment Reminder */}
-        {!paid && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
-            <div className="flex items-center space-x-3">
-              <div className="bg-yellow-100 dark:bg-yellow-800 rounded-full p-2">
-                <Target className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
+        {/* Error Display */}
+        {errors.length > 0 && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
               </div>
-              <div>
-                <h3 className="font-semibold text-yellow-800 dark:text-yellow-200">
-                  Payment Required
-                </h3>
-                <p className="text-sm text-yellow-700 dark:text-yellow-300">
-                  Please complete your ₹20 payment to access the resume analysis service.
-                </p>
-                <button
-                  onClick={() => navigate('/resume-advisor')}
-                  className="mt-2 bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded text-sm font-medium"
-                >
-                  Go to Payment
-                </button>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Please fix the following errors:</h3>
+                <div className="mt-2 text-sm text-red-700">
+                  <ul className="list-disc pl-5 space-y-1">
+                    {errors.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -151,6 +128,7 @@ const UploadForm: React.FC = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Resume File Upload */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Resume File (PDF or DOCX) *
@@ -167,55 +145,92 @@ const UploadForm: React.FC = () => {
               <label htmlFor="resume-upload" className="cursor-pointer">
                 <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <p className="text-gray-600 dark:text-gray-400">
-                  {formData.resume ? formData.resume.name : 'Click to select file or drag and drop'}
+                  {resumeFile ? resumeFile.name : 'Click to select file or drag and drop'}
                 </p>
                 <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
                   PDF or DOCX files only
                 </p>
               </label>
             </div>
-            {formData.resume && (
+            {resumeFile && (
               <p className="mt-2 text-sm text-green-600 dark:text-green-400">
-                ✓ Selected: {formData.resume.name}
+                ✓ Selected: {resumeFile.name}
               </p>
             )}
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Target Role *
-            </label>
-            <input
-              type="text"
-              name="targetRole"
-              value={formData.targetRole}
-              onChange={handleInputChange}
-              placeholder="e.g., Software Engineer, Marketing Manager"
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              required
-            />
-          </div>
+          {/* Personal Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <User className="inline h-4 w-4 mr-1" />
+                Full Name *
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleInputChange}
+                placeholder="Your full name"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                required
+              />
+            </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              Email Address *
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="your.email@example.com"
-              className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-              required
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Mail className="inline h-4 w-4 mr-1" />
+                Email Address *
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder="your.email@example.com"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Phone className="inline h-4 w-4 mr-1" />
+                Phone Number *
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
+                placeholder="Your phone number"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                required
+              />
+            </div>
+
+                        <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <Briefcase className="inline h-4 w-4 mr-1" />
+                Desired Role *
+              </label>
+              <input
+                type="text"
+                name="desiredRole"
+                value={formData.desiredRole}
+                onChange={handleInputChange}
+                placeholder="e.g., Senior Software Engineer"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                required
+              />
+            </div>
           </div>
 
           <button
             type="submit"
-            disabled={isLoading || !paid}
+            disabled={isLoading}
             className={`w-full py-3 px-4 rounded-lg font-medium transition-colors duration-300 ${
-              isLoading || !paid
+              isLoading
                 ? 'bg-gray-400 cursor-not-allowed text-gray-200'
                 : 'bg-blue-600 hover:bg-blue-700 text-white'
             }`}
@@ -223,10 +238,10 @@ const UploadForm: React.FC = () => {
             {isLoading ? (
               <span className="flex items-center justify-center">
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Analyzing Resume...
+                Submitting Resume...
               </span>
             ) : (
-              'Analyze Resume'
+              'Submit Resume & Continue to Payment'
             )}
           </button>
         </form>

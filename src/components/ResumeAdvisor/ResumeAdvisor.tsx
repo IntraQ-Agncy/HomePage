@@ -1,16 +1,10 @@
-import React from 'react';
-import { FileText, Upload, Mail, CheckCircle, Star, ArrowRight, CreditCard } from 'lucide-react';
+import React, { useState } from 'react';
+import { FileText, Upload, Mail, CheckCircle, Star, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { PAYMENT_LINKS } from '../../config/payments';
+
 
 const ResumeAdvisor: React.FC = () => {
   const navigate = useNavigate();
-
-  const handlePayment = () => {
-    // Redirect to the ResumeAdvisor payment page
-    const paymentUrl = PAYMENT_LINKS.ResumeAdvisor;
-    window.location.href = paymentUrl;
-  };
 
   const howItWorks = [
     {
@@ -20,8 +14,8 @@ const ResumeAdvisor: React.FC = () => {
     },
     {
       icon: <Upload className="h-8 w-8 text-blue-600" />,
-      title: 'AI Analysis',
-      description: 'Our AI analyzes your resume for the target role'
+      title: 'Complete Payment',
+      description: 'Pay ₹20 to access our AI analysis tool'
     },
     {
       icon: <Mail className="h-8 w-8 text-blue-600" />,
@@ -43,8 +37,8 @@ const ResumeAdvisor: React.FC = () => {
     },
     {
       icon: <CheckCircle className="h-6 w-6 text-green-500" />,
-      title: 'Affordable',
-      description: 'Professional resume advice for just ₹20'
+      title: 'Just ₹20',
+      description: 'Professional resume advice at an unbeatable price'
     }
   ];
 
@@ -97,14 +91,14 @@ const ResumeAdvisor: React.FC = () => {
             AI Resume Improvement Advisor
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Get professional resume feedback powered by AI in under 5 minutes. 
-            Complete payment to access the AI analysis tool and optimize your CV for ATS systems.
+            Get professional resume feedback powered by AI in under 5 minutes for just ₹20. 
+            Upload your resume and complete payment to access our AI analysis tool and optimize your CV for ATS systems.
           </p>
           <button
-            onClick={handlePayment}
+            onClick={() => navigate('/resume-advisor/upload')}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg"
           >
-            Complete Payment - ₹20
+            Upload Resume & Continue - ₹20
           </button>
         </div>
       </section>
@@ -218,98 +212,32 @@ const ResumeAdvisor: React.FC = () => {
             Ready to Improve Your Resume?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Complete payment to access our AI-powered resume analysis tool for just ₹20
+            Upload your resume and complete payment to access our AI-powered resume analysis tool for just ₹20
           </p>
           <button
-            onClick={handlePayment}
+            onClick={() => navigate('/resume-advisor/upload')}
             className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg flex items-center mx-auto space-x-2"
           >
-            <CreditCard className="h-5 w-5 mr-2" />
-            <span>Complete Payment - ₹20</span>
+            <Upload className="h-5 w-5 mr-2" />
+            <span>Upload Resume & Continue - ₹20</span>
             <ArrowRight className="h-5 w-5" />
           </button>
         </div>
       </section>
 
-      {/* Post-Payment Access */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            After Payment - Upload Your Resume
-          </h2>
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
-            <p className="text-yellow-800 dark:text-yellow-200 font-medium">
-              ⚠️ Only use this form after you have completed payment on the Razorpay page
-            </p>
-          </div>
-          <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-8">
-            <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
-              📋 Next Steps After Payment
-            </h3>
-            <ol className="text-left text-blue-700 dark:text-blue-300 space-y-2 max-w-md mx-auto">
-              <li>1. Click "Complete Payment - ₹20" above</li>
-              <li>2. Complete payment on Razorpay page</li>
-              <li>3. Return to this page after payment</li>
-              <li>4. Enter your payment email below</li>
-              <li>5. Click "Verify & Upload Resume"</li>
-            </ol>
-          </div>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            After completing payment, verify your payment to access the resume upload form
+      {/* Developer Test Link */}
+      <div className="py-8 px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-4xl mx-auto">
+          <p className="text-xs text-gray-400 dark:text-gray-500">
+            🧪 Developer: <a 
+              href="/resume-advisor/test" 
+              className="text-blue-500 hover:text-blue-600 underline"
+            >
+              Test Backend Services
+            </a>
           </p>
-          
-          {/* Payment Verification Form */}
-          <div className="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-lg max-w-md mx-auto">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 text-left">
-                  📧 Email Used for Payment *
-                </label>
-                <input
-                  type="email"
-                  placeholder="your.email@example.com"
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                  id="payment-email"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 text-left">
-                  🔢 Transaction ID (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="RZP1234567890"
-                  className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-                  id="transaction-id"
-                />
-              </div>
-              
-              <button
-                onClick={() => {
-                  const email = (document.getElementById('payment-email') as HTMLInputElement).value;
-                  if (email) {
-                    // For now, we'll trust the user and redirect them
-                    // In production, you'd verify this with your backend
-                    navigate('/resume-advisor/upload?paid=1&email=' + encodeURIComponent(email));
-                  } else {
-                    alert('Please enter your email address');
-                  }
-                }}
-                className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
-              >
-                <Upload className="h-5 w-5 mr-2 inline" />
-                Verify & Upload Resume
-              </button>
-            </div>
-            
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-4 text-left">
-              💡 Enter the email you used for payment. We'll verify your payment and grant access to the upload form.
-            </p>
-          </div>
         </div>
-      </section>
+      </div>
     </div>
   );
 };

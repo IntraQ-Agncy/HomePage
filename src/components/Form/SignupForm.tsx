@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PAYMENT_LINKS, isValidPlan } from '../../config/payments';
-import { GOOGLE_APPS_SCRIPT_URL } from '../../config/sheets';
 
 const SignupForm: React.FC = () => {
   const query = new URLSearchParams(useLocation().search);
@@ -42,45 +41,8 @@ const SignupForm: React.FC = () => {
       JSON.stringify({ email, niche, location, phone, country, plan: selectedPlan, orderId })
     );
 
-    // Send to Google Sheets via Apps Script if configured
-    if (GOOGLE_APPS_SCRIPT_URL) {
-      try {
-        setSubmitting(true);
-        const payload = {
-          timestamp: new Date().toISOString(),
-          order_id: orderId,
-          buyer_email: email,
-          niche,
-          location,
-          qty: 1,
-          status: 'initiated',
-          apify_run_id: '',
-          csv_url: '',
-          total_price: selectedPlan === 'Starter' ? 899 : selectedPlan === 'Pro' ? 1999 : 3499,
-          plan: selectedPlan,
-          country,
-          phone
-        };
-
-        // Use sendBeacon for reliability during navigation
-        if (navigator.sendBeacon) {
-          const blob = new Blob([JSON.stringify(payload)], { type: 'text/plain;charset=utf-8' });
-          navigator.sendBeacon(GOOGLE_APPS_SCRIPT_URL, blob);
-        } else {
-          // Fallback to fetch
-          await fetch(GOOGLE_APPS_SCRIPT_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload),
-            keepalive: true
-          }).catch(() => {/* ignore network errors */});
-        }
-      } catch (err) {
-        console.error('Failed to log order to Google Sheets', err);
-      } finally {
-        setSubmitting(false);
-      }
-    }
+    // Log the submission locally
+    console.log('Signup submitted:', { email, niche, location, phone, country, plan: selectedPlan, orderId });
 
     // Immediately redirect to payment
     const paymentUrl = PAYMENT_LINKS[selectedPlan as keyof typeof PAYMENT_LINKS];

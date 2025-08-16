@@ -1,0 +1,21 @@
+# Environment Variables Template for Vercel Deployment
+# Copy this content to a new file named .env in your project root
+
+# Supabase Configuration (Required for Resume Advisor)
+VITE_SUPABASE_URL=https://your-project-id.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key-here
+
+# OpenAI API (Optional - for AI resume analysis)
+VITE_OPENAI_API_KEY=your-openai-api-key-here
+
+# Payment Configuration (Optional - for payment processing)
+VITE_RAZORPAY_KEY_ID=your-razorpay-key-id
+VITE_RAZORPAY_KEY_SECRET=your-razorpay-key-secret
+
+# Email Service (Optional - for notifications)
+VITE_BREVO_API_KEY=your-brevo-api-key
+
+# Note: 
+# - Never commit your actual .env file to version control
+# - Add .env to your .gitignore file
+# - Set these variables in Vercel dashboard for production
