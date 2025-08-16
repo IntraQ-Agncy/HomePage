@@ -225,19 +225,7 @@ const ResumeAdvisor: React.FC = () => {
         </div>
       </section>
 
-      {/* Developer Test Link */}
-      <div className="py-8 px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto">
-          <p className="text-xs text-gray-400 dark:text-gray-500">
-            🧪 Developer: <a 
-              href="/resume-advisor/test" 
-              className="text-blue-500 hover:text-blue-600 underline"
-            >
-              Test Backend Services
-            </a>
-          </p>
-        </div>
-      </div>
+
     </div>
   );
 };

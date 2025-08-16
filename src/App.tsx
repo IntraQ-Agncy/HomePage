@@ -12,7 +12,6 @@ import Footer from './components/Footer/Footer';
 import ResumeAdvisor from './components/ResumeAdvisor/ResumeAdvisor';
 import UploadForm from './components/ResumeAdvisor/UploadForm';
 import SuccessPage from './components/ResumeAdvisor/SuccessPage';
-import TestBackend from './components/ResumeAdvisor/TestBackend';
 import SignupForm from './components/Form/SignupForm';
 
 // Error Boundary Component
@@ -90,7 +89,6 @@ function App() {
                 <Route path="/resume-advisor" element={<ResumeAdvisor />} />
                 <Route path="/resume-advisor/upload" element={<UploadForm />} />
                 <Route path="/resume-advisor/success" element={<SuccessPage />} />
-                <Route path="/resume-advisor/test" element={<TestBackend />} />
                 <Route path="/signup" element={<SignupForm />} />
               </Routes>
             </main>

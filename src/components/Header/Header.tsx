@@ -41,7 +41,10 @@ const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
+          <div 
+            className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity duration-300"
+            onClick={() => navigate('/')}
+          >
             <Bot className="h-8 w-8 text-blue-600 dark:text-blue-400" />
             <span className="text-xl font-bold text-gray-900 dark:text-white">
               IntraQ
