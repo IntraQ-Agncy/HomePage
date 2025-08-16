@@ -1,22 +1,15 @@
 import React from 'react';
 import { FileText, Upload, Mail, CheckCircle, Star, ArrowRight, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { PAYMENT_LINKS } from '../../config/payments';
 
 const ResumeAdvisor: React.FC = () => {
   const navigate = useNavigate();
 
   const handlePayment = () => {
-    // Open Razorpay payment link directly
-    const paymentUrl = 'https://rzp.io/rzp/cZbcAipV';
-    window.open(paymentUrl, '_blank');
-    
-    // Store payment attempt timestamp
-    localStorage.setItem('paymentAttempt', Date.now().toString());
-    
-    // Show payment instructions
-    setTimeout(() => {
-      alert('Payment window opened! After completing payment, return here and enter your email to verify.');
-    }, 1000);
+    // Redirect to the ResumeAdvisor payment page
+    const paymentUrl = PAYMENT_LINKS.ResumeAdvisor;
+    window.location.href = paymentUrl;
   };
 
   const howItWorks = [
@@ -105,13 +98,13 @@ const ResumeAdvisor: React.FC = () => {
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
             Get professional resume feedback powered by AI in under 5 minutes. 
-            Optimize your CV for ATS systems and land more interviews.
+            Complete payment to access the AI analysis tool and optimize your CV for ATS systems.
           </p>
           <button
             onClick={handlePayment}
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg"
           >
-            Get Feedback for ₹20
+            Complete Payment - ₹20
           </button>
         </div>
       </section>
@@ -225,14 +218,14 @@ const ResumeAdvisor: React.FC = () => {
             Ready to Improve Your Resume?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Get professional AI-powered feedback in under 5 minutes for just ₹20
+            Complete payment to access our AI-powered resume analysis tool for just ₹20
           </p>
           <button
             onClick={handlePayment}
             className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg flex items-center mx-auto space-x-2"
           >
             <CreditCard className="h-5 w-5 mr-2" />
-            <span>Pay ₹20 & Get Started</span>
+            <span>Complete Payment - ₹20</span>
             <ArrowRight className="h-5 w-5" />
           </button>
         </div>
@@ -244,19 +237,25 @@ const ResumeAdvisor: React.FC = () => {
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
             After Payment - Upload Your Resume
           </h2>
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
+            <p className="text-yellow-800 dark:text-yellow-200 font-medium">
+              ⚠️ Only use this form after you have completed payment on the Razorpay page
+            </p>
+          </div>
           <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6 mb-8">
             <h3 className="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-2">
               📋 Next Steps After Payment
             </h3>
             <ol className="text-left text-blue-700 dark:text-blue-300 space-y-2 max-w-md mx-auto">
-              <li>1. Complete payment in the new tab</li>
-              <li>2. Return to this page</li>
-              <li>3. Enter your payment email below</li>
-              <li>4. Click "Verify & Upload Resume"</li>
+              <li>1. Click "Complete Payment - ₹20" above</li>
+              <li>2. Complete payment on Razorpay page</li>
+              <li>3. Return to this page after payment</li>
+              <li>4. Enter your payment email below</li>
+              <li>5. Click "Verify & Upload Resume"</li>
             </ol>
           </div>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            Verify your payment to access the resume upload form
+            After completing payment, verify your payment to access the resume upload form
           </p>
           
           {/* Payment Verification Form */}
