@@ -7,7 +7,7 @@ const ResumeAdvisor: React.FC = () => {
 
   const handlePayment = () => {
     // Open Razorpay payment link directly
-    const paymentUrl = 'https://rzp.io/rzp/pLXHZSr1';
+    const paymentUrl = 'https://rzp.io/rzp/cZbcAipV';
     window.open(paymentUrl, '_blank');
     
     // Store payment attempt timestamp

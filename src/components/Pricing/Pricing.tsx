@@ -1,12 +1,15 @@
 import React, { useRef } from 'react';
 import { Check, Star } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import { PricingTier } from '../../types';
 
 // Component to render payment buttons that redirect to the signup form
 const PaymentButton: React.FC<{ planName: string }> = ({ planName }) => {
+  const navigate = useNavigate();
+  
   const handleButtonClick = () => {
-    window.location.href = `/signup?plan=${encodeURIComponent(planName)}`;
+    navigate(`/signup?plan=${encodeURIComponent(planName)}`);
   };
 
   return (

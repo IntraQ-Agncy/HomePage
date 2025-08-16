@@ -2,7 +2,7 @@ export const PAYMENT_LINKS: Record<string, string> = {
   Starter: 'https://rzp.io/rzp/wOp3WpFG',
   Pro: 'https://rzp.io/rzp/WXgxNPyy',
   Enterprise: 'https://rzp.io/rzp/WR0xMgdR',
-  ResumeAdvisor: 'https://rzp.io/rzp/pLXHZSr1'
+  ResumeAdvisor: 'https://rzp.io/rzp/cZbcAipV'
   //'https://rzp.io/rzp/kcqduJjC'
 };
 
